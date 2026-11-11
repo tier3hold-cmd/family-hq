@@ -25,17 +25,72 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
-.wrap{max-width:860px;margin:0 auto;padding-block:16px 120px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
+.wrap{max-width:1240px;margin:0 auto;padding-block:16px 120px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
 
 /* tab bar */
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:2px solid var(--line)}
-.tabs-in{max-width:860px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding-block:8px;padding-left:max(10px,env(safe-area-inset-left,0px));padding-right:max(10px,env(safe-area-inset-right,0px))}
+.tabs-in{max-width:1400px;margin:0 auto;display:flex;gap:8px;padding-block:8px;padding-left:max(10px,env(safe-area-inset-left,0px));padding-right:max(10px,env(safe-area-inset-right,0px))}
 .tab{border:0;background:transparent;border-radius:14px;padding:6px 2px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:64px;font-weight:800;font-size:.8rem;color:var(--muted)}
 .tab .av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--display);font-size:1.25rem;background:var(--k)}
 .tab[aria-selected="true"]{background:color-mix(in srgb,var(--k) 16%,transparent);color:var(--ink)}
 .tab[aria-selected="true"] .av{box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--k)}
 .tab.lock .av{background:var(--ink);color:var(--surface)}
 .tab .badge{font-size:.68rem;line-height:1;background:var(--sun);color:var(--sun-ink);border-radius:99px;padding:2px 6px;margin-top:-10px;position:relative;z-index:1}
+
+/* top tabs: one row, avatar beside name (landscape) */
+.tab{flex:1 1 0;flex-direction:row!important;justify-content:center;gap:10px!important;min-height:56px!important;font-size:1rem!important;padding:6px 10px!important;position:relative}
+.tab .badge{position:absolute;top:4px;left:calc(50% - 4px);margin:0}
+.tab.caltab .av{background:var(--sun);color:var(--sun-ink)}
+.tab .av{flex:none}
+.tab .av svg{width:20px;height:20px}
+@media (max-width:760px){.tab{flex-direction:column!important;gap:2px!important;font-size:.72rem!important;padding:4px 2px!important}.tab .badge{left:auto;right:4px}}
+
+/* kid page: sticky sidebar | main | daily rail */
+:root{--tabs-h:74px}
+.kid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:240px minmax(0,1fr) 320px;grid-template-areas:"side main rail";gap:18px;align-items:start;padding-block:16px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.side{grid-area:side;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tabs-h) + 14px);display:flex;flex-direction:column;gap:12px;padding:0;overflow:hidden}
+.side .who{background:var(--k);color:#fff;padding:16px;display:flex;flex-direction:column;gap:12px}
+.side .who h1{font-size:1.9rem;font-weight:800}
+.side .who .sub{font-weight:700;opacity:.92}
+.side .who .rowx{display:flex;align-items:center;gap:12px}
+.side .ring{width:84px;height:84px;flex:none}
+.side .ring .num{font-size:1.3rem}
+.side .stat2{display:flex;flex-direction:column;gap:6px}
+.side .stat2 span{font-weight:800}
+.side .stat2 .m{background:var(--sun);color:var(--sun-ink);border-radius:99px;padding:2px 10px;align-self:flex-start}
+.sidenav{display:flex;flex-direction:column;gap:8px;padding:0 12px}
+.snav{display:flex;align-items:center;gap:12px;border:0;border-radius:16px;padding:12px 14px;min-height:60px;font-family:var(--display);font-weight:800;font-size:1.3rem;background:var(--surface2);color:var(--ink);text-align:left}
+.snav svg{width:26px;height:26px;flex:none}
+.snav[aria-current="page"]{background:var(--k);color:#fff;box-shadow:0 4px 0 color-mix(in srgb,var(--k) 55%,#000)}
+.snav .cnt{margin-left:auto;font-family:var(--body);font-size:.85rem;background:var(--bad);color:#fff;border-radius:99px;min-width:28px;padding:2px 8px;text-align:center}
+.snav .cnt.ok{background:var(--good)}
+.side .today-ev{padding:0 12px 14px}
+.evlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.evlist li{background:var(--surface2);border-left:5px solid var(--ev,var(--ink));border-radius:10px;padding:6px 10px;font-weight:700;font-size:.9rem;overflow-wrap:anywhere}
+.evlist li small{display:block;color:var(--muted);font-weight:800}
+.main{grid-area:main;display:flex;flex-direction:column;gap:16px;min-width:0}
+.rail{grid-area:rail;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tabs-h) + 14px);display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - var(--tabs-h) - 30px);overflow:auto;border-radius:var(--r)}
+.page-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.page-h h2{font-size:2.1rem}
+.page-h .meta{color:var(--muted);font-weight:800}
+.choregrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px}
+@media (max-width:1180px){.kid{grid-template-columns:220px minmax(0,1fr);grid-template-areas:"side rail" "side main"}.rail{position:static;max-height:none;overflow:visible;display:grid;grid-template-columns:1fr 1fr}}
+@media (max-width:760px){.kid{grid-template-columns:1fr;grid-template-areas:"side" "rail" "main"}.side{position:static}.sidenav{flex-direction:row}.snav{flex:1;font-size:1.05rem}.rail{grid-template-columns:1fr}}
+
+/* calendar */
+.calwrap{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start;padding-block:16px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (max-width:980px){.calwrap{grid-template-columns:1fr}}
+.calbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.calbar h2{font-size:2rem;flex:1;min-width:0}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal .dow{font-weight:800;color:var(--muted);text-align:center;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em}
+.cal .cell{background:var(--surface);border-radius:12px;min-height:92px;padding:6px;display:flex;flex-direction:column;gap:3px;box-shadow:var(--shadow);min-width:0}
+.cal .cell.out{opacity:.45}
+.cal .cell.today{outline:3px solid var(--sun)}
+.cal .dn{font-family:var(--display);font-weight:800;font-size:1.05rem}
+.cal .ev{font-size:.74rem;font-weight:800;border-radius:6px;padding:1px 5px;background:color-mix(in srgb,var(--ev) 22%,var(--surface));border-left:4px solid var(--ev);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal .due{font-size:.7rem;font-weight:800;color:var(--muted)}
+.gcal{width:100%;height:640px;border:0;border-radius:var(--r);background:#fff;margin-top:16px}
 
 /* hero */
 .hero{background:var(--k);color:#fff;border-radius:26px;padding:20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;position:relative;overflow:hidden;box-shadow:var(--shadow)}
@@ -317,7 +372,7 @@ let lsTab=null;try{lsTab=localStorage.getItem("fhq-tab")}catch(e){}
 
 /* ---------- state ---------- */
 const S={weeks:{},chores:[],done:{},logs:[],got:{weeks:false,chores:false,done:false},
-  db:null,dbState:"loading",readOnly:false,tab:KID[lsTab]?lsTab:"elijah",parent:false,ptab:"status",pkid:"all",confirm:null};
+  db:null,dbState:"loading",readOnly:false,tab:KID[lsTab]?lsTab:"elijah",parent:false,cal:false,calMonth:null,calendar:{embed:"",events:[]},section:(()=>{try{return localStorage.getItem("fhq-sec")==="chores"?"chores":"school"}catch(_){return "school"}})(),ptab:"status",pkid:"all",confirm:null};
 let db=null;
 
 /* ---------- data access ---------- */
@@ -454,11 +509,17 @@ function tick(){
 
 /* ---------- views ---------- */
 const CHECK=`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+const IC={
+ book:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 7h7"/></svg>`,
+ home:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>`,
+ cal:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`};
 function renderTabs(){
   const {today}=dates();
+  const evToday=(S.calendar.events||[]).filter(e=>e.date===today).length;
   $("#tabs").innerHTML=`<div class="tabs-in">${KIDS.map(k=>{
     const due=allItems().filter(i=>i.kids.includes(k.id)&&i.due===today&&!S.done[sId(i,k.id)]).length;
-    return `<button class="tab" role="tab" style="--k:var(--${k.id})" aria-selected="${!S.parent&&S.tab===k.id}" data-act="tab" data-kid="${k.id}"><span class="av">${k.init}</span>${due?`<span class="badge">${due}</span>`:""}${esc(k.name)}</button>`}).join("")}
+    return `<button class="tab" role="tab" style="--k:var(--${k.id})" aria-selected="${!S.parent&&!S.cal&&S.tab===k.id}" data-act="tab" data-kid="${k.id}"><span class="av">${k.init}</span>${due?`<span class="badge">${due}</span>`:""}${esc(k.name)}</button>`}).join("")}
+  <button class="tab caltab" role="tab" style="--k:var(--sun)" aria-selected="${S.cal}" data-act="calendar"><span class="av">${IC.cal}</span>${evToday?`<span class="badge">${evToday}</span>`:""}Calendar</button>
   <button class="tab lock" role="tab" style="--k:var(--ink)" aria-selected="${S.parent}" data-act="parent"><span class="av">${S.parent?"✓":"🔒"}</span>Parents</button></div>`;
 }
 function statusBanner(){
@@ -483,8 +544,12 @@ function ring(pct,label){
   return `<div class="ring"><svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="${r}" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="10"/><circle cx="48" cy="48" r="${r}" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-pct)}"/></svg><div class="num"><span>${Math.round(pct*100)}%<small>${label}</small></span></div></div>`;
 }
 function earnings(kid,week){return Object.values(S.done).filter(d=>d.kind==="chore"&&d.kid===kid&&d.week===week).reduce((a,d)=>a+(Number(d.pay)||0),0)}
+function evColor(e){return e.kids&&e.kids.length===1?`var(--${e.kids[0]})`:"var(--sun)"}
+function evWho(e){return e.kids&&e.kids.length?e.kids.map(k=>KID[k]?.name).filter(Boolean).join(", "):"Whole family"}
+function fmtClock(t){if(!t)return "";const[h,m]=t.split(":").map(Number);return new Date(2000,0,1,h,m).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})}
+function evRow(e,showDate){return `<li style="--ev:${evColor(e)}">${esc(e.title)}<small>${showDate?esc(fmtShort(e.date))+" · ":""}${e.time?esc(fmtClock(e.time))+" · ":""}${esc(evWho(e))}</small></li>`}
 function kidView(kid){
-  const k=KID[kid];const {today,thisW,nextW,lastW}=dates();const endThis=addDays(thisW,6),endNext=addDays(nextW,6);
+  const k=KID[kid];const {today,thisW,nextW}=dates();const endThis=addDays(thisW,6),endNext=addDays(nextW,6);
   const mine=allItems().filter(i=>i.kids.includes(kid));
   const thisItems=mine.filter(i=>i.due>=thisW&&i.due<=endThis);
   const nextItems=mine.filter(i=>i.due>=nextW&&i.due<=endNext);
@@ -492,11 +557,12 @@ function kidView(kid){
   const late=mine.filter(i=>i.due<thisW&&i.due>=WINDOW[0]&&!S.done[sId(i,kid)]);
   const doneN=thisItems.filter(i=>S.done[sId(i,kid)]).length;
   const pct=thisItems.length?doneN/thisItems.length:0;
-  const dueToday=thisItems.filter(i=>i.due===today&&!S.done[sId(i,kid)]).length;
+  const schoolLeft=late.length+thisItems.filter(i=>i.due<=today&&!S.done[sId(i,kid)]).length;
   const chores=S.chores.filter(c=>(c.kids||[]).includes(kid));
   const dayKey=c=>{if(!c.day)return 99;const d=dayDate(c,thisW);return d===today?0:d<today?(S.done[cId(c,thisW,0,kid)]?50:-1):c.day};
   const basics=chores.filter(c=>!Number(c.pay)).sort((a,b)=>dayKey(a)-dayKey(b));
   const paid=chores.filter(c=>Number(c.pay)>0);
+  const choreLeft=basics.filter(c=>c.day&&dayDate(c,thisW)<=today&&!S.done[cId(c,thisW,0,kid)]).length;
   const earned=earnings(kid,thisW);
   const dn=dayNum();const kidIdx=KIDS.findIndex(x=>x.id===kid);
   const v=VERSES[(dn+kidIdx*8)%VERSES.length];
@@ -504,26 +570,82 @@ function kidView(kid){
   const w=list[(dn+(kid==="conley"?10:0))%list.length];
   const wDone=!!S.done[wId(kid,today)];
   const boy=!!k.trainAge;
-  return `<div style="--k:var(--${kid})" class="wrap" id="kidwrap">
-  ${statusBanner()}
-  <section class="hero">${ring(pct,"this week")}<div style="position:relative;z-index:1;min-width:0"><h1>Hi, ${esc(k.name)}!</h1><div class="sub">${esc(k.grade)} · ${esc(fmtDay(today))}</div>
-    <div class="chips"><span class="chip">${doneN} of ${thisItems.length} school items</span>${dueToday?`<span class="chip">${dueToday} due today</span>`:`<span class="chip">Nothing left for today</span>`}<span class="chip money">${money(earned)} earned</span></div></div></section>
-  <section class="daily">
+  const evs=(S.calendar.events||[]).filter(e=>e.date===today&&(!e.kids||!e.kids.length||e.kids.includes(kid))).sort((a,b)=>(a.time||"")<(b.time||"")?-1:1);
+  const sec=S.section;
+  const side=`<aside class="side card"><div class="who"><div><h1>Hi, ${esc(k.name)}!</h1><div class="sub">${esc(k.grade)} · ${esc(pd(today).toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"}))}</div></div>
+    <div class="rowx">${ring(pct,"school")}<div class="stat2"><span>${doneN} of ${thisItems.length} done</span><span class="m">${money(earned)} earned</span></div></div></div>
+    <nav class="sidenav" aria-label="Sections">
+      <button class="snav" aria-current="${sec==="school"?"page":"false"}" data-act="sec" data-id="school">${IC.book}School${schoolLeft?`<span class="cnt" aria-label="${schoolLeft} to do">${schoolLeft}</span>`:`<span class="cnt ok" aria-label="all caught up">✓</span>`}</button>
+      <button class="snav" aria-current="${sec==="chores"?"page":"false"}" data-act="sec" data-id="chores">${IC.home}Chores${choreLeft?`<span class="cnt" aria-label="${choreLeft} to do">${choreLeft}</span>`:`<span class="cnt ok" aria-label="all caught up">✓</span>`}</button>
+    </nav>
+    <div class="today-ev">${evs.length?`<div class="mini-h" style="margin-top:4px">Today on the calendar</div><ul class="evlist">${evs.map(e=>evRow(e,false)).join("")}</ul>`:""}</div></aside>`;
+  const school=`<div class="page-h"><h2>School</h2><span class="meta">This week · ${esc(fmtShort(thisW))} – ${esc(fmtShort(endThis))}</span></div>
+    ${late.length?`<section class="day"><div class="day-h" style="color:var(--bad)">Catch up from last week</div>${late.map(i=>itemRow(i,kid)).join("")}</section>`:""}
+    <section class="day">${!S.got.weeks?`<div class="loading">Loading assignments…</div>`:thisItems.length?dayGroups(thisItems,kid,today):`<div class="empty">No school items for this week yet. A parent can add them in the Parents tab.</div>`}</section>
+    <section class="day"><details class="more" ${nextItems.length&&!thisItems.some(i=>!S.done[sId(i,kid)])?"open":""}><summary>Next week · ${esc(fmtShort(nextW))} – ${esc(fmtShort(endNext))} (${nextItems.length})</summary>
+    <div class="day">${nextItems.length?dayGroups(nextItems,kid,today):`<div class="empty">Next week's work isn't posted yet.</div>`}${later.length?`<div class="day-h">Coming up later</div>${later.map(i=>itemRow(i,kid)).join("")}`:""}</div></details></section>`;
+  const choresH=`<div class="page-h"><h2>Chores</h2><span class="meta">${money(earned)} earned this week</span></div>
+    <section class="day"><div class="day-h">Basic chores · no pay</div>
+    ${!S.got.chores?`<div class="loading">Loading chores…</div>`:basics.length?`<div class="choregrid">${basics.map(c=>choreRow(c,kid,thisW)).join("")}</div>`:`<div class="empty">No basic chores for ${esc(k.name)} yet.</div>`}</section>
+    <section class="day"><div class="day-h">Money jobs</div>
+    ${!S.got.chores?"":paid.length?`<div class="choregrid">${paid.map(c=>choreRow(c,kid,thisW)).join("")}</div>`:`<div class="empty">No paid jobs for ${esc(k.name)} yet.</div>`}</section>`;
+  const rail=`<aside class="rail">
     <div class="card dcard"><div class="eyebrow">Verse of the day</div><p class="verse" style="margin:6px 0 0">“${esc(v[0])}”</p><div class="ref">${esc(v[1])}</div></div>
     <div class="card dcard"><div class="eyebrow">${boy?`Workout of the day · trains like age ${k.trainAge}`:"Gymnastics & dance move of the day"}</div><h3 style="margin-top:4px">${esc(w[0])}</h3><ul class="move-steps">${w[1].map(s=>`<li>${esc(s)}</li>`).join("")}</ul>${VIDS[w[0]]?`<a class="watch" href="https://www.youtube.com/watch?v=${VIDS[w[0]][0]}" target="_blank" rel="noopener noreferrer"><span class="play" aria-hidden="true">▶</span><span>Watch how <small>${VIDS[w[0]][1]} · ${esc(VIDS[w[0]][2])}</small></span></a>`:""}<div class="tip">${boy?BOY_TIP:G_TIP}</div>
-      <button class="did${wDone?" on":""}" data-act="workout" data-kid="${kid}" data-title="${esc(w[0])}" aria-pressed="${wDone}">${wDone?"✓ Done today!":"I did it!"}</button></div>
-  </section>
-  ${late.length?`<section class="day"><div class="sec-h"><h2>Catch up</h2><span class="meta">${late.length} from last week</span></div>${late.map(i=>itemRow(i,kid)).join("")}</section>`:""}
-  <section class="day"><div class="sec-h"><h2>School this week</h2><span class="meta">${esc(fmtShort(thisW))} – ${esc(fmtShort(endThis))}</span></div>
-    ${!S.got.weeks?`<div class="loading">Loading assignments…</div>`:thisItems.length?dayGroups(thisItems,kid,today):`<div class="empty">No school items for this week yet. A parent can add them in the Parents tab.</div>`}</section>
-  <section class="day"><div class="sec-h"><h2>Basic chores</h2><span class="meta">Every week · no pay</span></div>
-    ${!S.got.chores?`<div class="loading">Loading chores…</div>`:basics.length?basics.map(c=>choreRow(c,kid,thisW)).join(""):`<div class="empty">No basic chores for ${esc(k.name)} yet.</div>`}</section>
-  <section class="day"><div class="sec-h"><h2>Money jobs</h2><span class="meta">${money(earned)} earned this week</span></div>
-    ${!S.got.chores?"":paid.length?paid.map(c=>choreRow(c,kid,thisW)).join(""):`<div class="empty">No paid jobs for ${esc(k.name)} yet.</div>`}</section>
-  <section class="day"><details class="more" ${nextItems.length&&!thisItems.some(i=>!S.done[sId(i,kid)])?"open":""}><summary>Next week · ${esc(fmtShort(nextW))} – ${esc(fmtShort(endNext))} (${nextItems.length})</summary>
-    <div class="day">${nextItems.length?dayGroups(nextItems,kid,today):`<div class="empty">Next week's work isn't posted yet.</div>`}${later.length?`<div class="day-h">Coming up later</div>${later.map(i=>itemRow(i,kid)).join("")}`:""}</div></details></section>
-  </div>`;
+      <button class="did${wDone?" on":""}" data-act="workout" data-kid="${kid}" data-title="${esc(w[0])}" aria-pressed="${wDone}">${wDone?"✓ Done today!":"I did it!"}</button></div></aside>`;
+  return `<div class="kid" style="--k:var(--${kid})">${side}<section class="main">${statusBanner()}${sec==="chores"?choresH:school}</section>${rail}</div>`;
 }
+
+/* ---------- calendar ---------- */
+function monthAdd(m,n){const d=new Date(m+"-15T12:00:00");d.setMonth(d.getMonth()+n);return ymd(d).slice(0,7)}
+function calView(){
+  const {today}=dates();const m=S.calMonth||today.slice(0,7);
+  const start=mondayOf(m+"-01");const evs=S.calendar.events||[];
+  const byDate={};evs.forEach(e=>(byDate[e.date]=byDate[e.date]||[]).push(e));
+  Object.values(byDate).forEach(a=>a.sort((x,y)=>(x.time||"")<(y.time||"")?-1:1));
+  const dueBy={};allItems().forEach(i=>{dueBy[i.due]=(dueBy[i.due]||0)+i.kids.length});
+  const cells=[];for(let i=0;i<42;i++){const d=addDays(start,i);if(i>=35&&d.slice(0,7)!==m)break;
+    cells.push(`<div class="cell${d.slice(0,7)!==m?" out":""}${d===today?" today":""}"><span class="dn">${pd(d).getDate()}</span>${(byDate[d]||[]).map(e=>`<span class="ev" style="--ev:${evColor(e)}" title="${esc(e.title)} · ${esc(evWho(e))}">${e.time?esc(fmtClock(e.time).replace(":00",""))+" ":""}${esc(e.title)}</span>`).join("")}${dueBy[d]?`<span class="due">${dueBy[d]} school due</span>`:""}</div>`)}
+  const up=evs.filter(e=>e.date>=today&&e.date<=addDays(today,30)).sort((a,b)=>(a.date+(a.time||""))<(b.date+(b.time||""))?-1:1);
+  const emb=S.calendar.embed||"";
+  const g=emb?(S.local?`<iframe class="gcal" src="${esc(emb)}" title="Family Google Calendar" loading="lazy"></iframe>`
+    :`<div class="card" style="margin-top:16px"><div class="eyebrow" style="--k:var(--ink)">Google Calendar</div><p style="margin:6px 0 10px;font-weight:700">The Google Calendar shows right on this page in the GitHub version. Here, open it in a new tab:</p><a class="btn primary" style="display:inline-flex;align-items:center;text-decoration:none" href="${esc(emb)}" target="_blank" rel="noopener noreferrer">Open Google Calendar</a></div>`):"";
+  return `<div class="calwrap"><section style="min-width:0">${statusBanner()}
+    <div class="calbar"><h2>${esc(pd(m+"-01").toLocaleDateString("en-US",{month:"long",year:"numeric"}))}</h2>
+      <button class="btn" data-act="calprev" aria-label="Previous month">‹ Prev</button><button class="btn" data-act="caltoday">Today</button><button class="btn" data-act="calnext" aria-label="Next month">Next ›</button></div>
+    <div class="cal">${["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d=>`<div class="dow">${d}</div>`).join("")}${cells.join("")}</div>${g}</section>
+    <aside class="card" style="position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tabs-h) + 14px)"><h3 style="font-size:1.4rem;margin-bottom:10px">Coming up</h3>
+      ${up.length?`<ul class="evlist">${up.map(e=>evRow(e,true)).join("")}</ul>`:`<div class="empty" style="padding:10px">No events yet. Parents can add events or link a Google Calendar in Parents → Calendar.</div>`}</aside></div>`;
+}
+function normEmbed(raw){
+  let v=(raw||"").trim();if(!v)return "";
+  const m=v.match(/src=["']([^"']+)["']/);if(m)v=m[1];
+  v=v.replace(/&amp;/g,"&");
+  if(/^[^\s/@]+@[^\s/@]+$/.test(v))return "https://calendar.google.com/calendar/embed?src="+encodeURIComponent(v)+"&ctz="+encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone||"America/Chicago");
+  if(!/^https:\/\/(calendar\.google\.com|www\.google\.com\/calendar)\//.test(v))return null;
+  return v;
+}
+function saveCalendar(next,logText){
+  S.calendar=next;render();if(!db)return;
+  write(()=>db.doc("config/calendar").set(next));if(logText)logEvent("","calendar",logText,"parent");
+}
+function pCalendar(){
+  const {today}=dates();const evs=[...(S.calendar.events||[])].filter(e=>e.date>=addDays(today,-7)).sort((a,b)=>(a.date+(a.time||""))<(b.date+(b.time||""))?-1:1);
+  return `<div class="kidgrid">
+  <form class="card" id="evform" style="display:flex;flex-direction:column;gap:10px"><h3 style="font-size:1.3rem">Add a calendar event</h3>
+    <div class="row" id="evkids">${KIDS.map(k=>`<button type="button" class="kc" style="--k:var(--${k.id})" aria-pressed="false" data-act="akid" data-kid="${k.id}">${k.name}</button>`).join("")}<span style="color:var(--muted);font-weight:700;font-size:.85rem">None picked = whole family</span></div>
+    <label class="field">What<input id="ev-title" required placeholder="Soccer practice"></label>
+    <div class="row"><label class="field grow">Date<input id="ev-date" type="date" required value="${today}"></label><label class="field grow">Time (optional)<input id="ev-time" type="time"></label></div>
+    <button class="btn primary" type="submit">Add event</button></form>
+  <div class="card" style="display:flex;flex-direction:column;gap:10px"><h3 style="font-size:1.3rem">Link a Google Calendar</h3>
+    <p style="margin:0;color:var(--muted);font-weight:700;font-size:.92rem">In Google Calendar on a computer: Settings → pick the calendar → <b>Integrate calendar</b>. Copy the <b>Embed code</b> or the <b>Calendar ID</b> and paste it here. A calendar marked public shows to everyone; a private one only shows to people signed in to Google with access.</p>
+    <label class="field">Embed code, link, or Calendar ID<textarea id="cal-embed" rows="3" placeholder="&lt;iframe src=&quot;https://calendar.google.com/calendar/embed?src=…&quot;…">${esc(S.calendar.embed||"")}</textarea></label>
+    <div class="row"><button class="btn primary" data-act="calsave">Save link</button>${S.calendar.embed?`<button class="btn danger" data-act="calclear">Remove link</button>`:""}</div></div></div>
+  <h3 style="font-size:1.3rem">Events</h3>
+  <div class="loglist">${evs.length?evs.map(e=>`<div class="prow" style="border-left:6px solid ${evColor(e)}"><div class="grow"><b>${esc(e.title)}</b><div class="it-detail">${esc(fmtShort(e.date))}${e.time?" · "+esc(fmtClock(e.time)):""} · ${esc(evWho(e))}</div></div>
+    ${S.confirm==="e:"+e.id?`<button class="btn danger" data-act="evdel" data-id="${esc(e.id)}">Tap again to remove</button>`:`<button class="btn danger" data-act="evdelask" data-id="${esc(e.id)}">Remove</button>`}</div>`).join(""):`<div class="empty">No events yet.</div>`}</div>`;
+}
+
 function choreRow(c,kid,week){
   const slots=[];for(let i=0;i<(Number(c.freq)||1);i++){const d=S.done[cId(c,week,i,kid)];
     const cls=d?(d.kid===kid?"mine":"other"):"";const lbl=d?(KID[d.kid]?.init||"?"):"";
@@ -554,9 +676,9 @@ function codePad(){
   document.addEventListener("keydown",kd);draw();
 }
 function parentView(){
-  const t=S.ptab;const tabs=[["status","Status"],["grading","Grading"],["chores","Chores & pay"],["assign","Assignments"],["history","History"]];
+  const t=S.ptab;const tabs=[["status","Status"],["grading","Grading"],["chores","Chores & pay"],["assign","Assignments"],["calendar","Calendar"],["history","History"]];
   let body="";
-  if(t==="status")body=pStatus();else if(t==="grading")body=pGrading();else if(t==="chores")body=pChores();else if(t==="assign")body=pAssign();else body=pHistory();
+  if(t==="status")body=pStatus();else if(t==="grading")body=pGrading();else if(t==="chores")body=pChores();else if(t==="assign")body=pAssign();else if(t==="calendar")body=pCalendar();else body=pHistory();
   return `<div class="wrap" style="--k:var(--ink)">${statusBanner()}
   <div class="row"><h1 class="grow" style="font-size:2.1rem">Parent area</h1><button class="btn" data-act="lock">Lock</button></div>
   ${S.local?`<div class="banner">This copy saves checkmarks and history on this device only. Use the same phone or tablet each time, or use the claude.ai version to share across devices.</div>`:""}
@@ -640,16 +762,27 @@ function render(){
   const a=document.activeElement;
   if(a&&a.closest&&a.closest("#app")&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)){pending=true;return}
   pending=false;renderTabs();
-  $("#app").outerHTML=`<main id="app">${S.parent?parentView():kidView(S.tab)}</main>`;
+  $("#app").outerHTML=`<main id="app">${S.parent?parentView():S.cal?calView():kidView(S.tab)}</main>`;
+  const tb=$("#tabs");if(tb)document.documentElement.style.setProperty("--tabs-h",tb.offsetHeight+"px");
 }
 document.addEventListener("focusout",()=>setTimeout(()=>{if(pending)render()},0));
 
 document.addEventListener("click",e=>{
   const b=e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act,id=b.dataset.id,kid=b.dataset.kid;
   switch(a){
-    case "tab":S.parent=false;S.tab=kid;try{localStorage.setItem("fhq-tab",kid)}catch(_){}render();scrollTo(0,0);break;
+    case "tab":S.parent=false;S.cal=false;S.tab=kid;try{localStorage.setItem("fhq-tab",kid)}catch(_){}render();scrollTo(0,0);break;
     case "parent":if(!S.parent)codePad();break;
-    case "lock":S.parent=false;render();break;
+    case "calendar":S.parent=false;S.cal=true;render();scrollTo(0,0);break;
+    case "sec":S.section=id;try{localStorage.setItem("fhq-sec",id)}catch(_){}render();scrollTo(0,0);break;
+    case "calprev":S.calMonth=monthAdd(S.calMonth||dates().today.slice(0,7),-1);render();break;
+    case "calnext":S.calMonth=monthAdd(S.calMonth||dates().today.slice(0,7),1);render();break;
+    case "caltoday":S.calMonth=null;render();break;
+    case "calsave":{const v=normEmbed($("#cal-embed").value);if(v===null){toast("That doesn't look like a Google Calendar link, embed code, or Calendar ID.");break}
+      saveCalendar({...S.calendar,embed:v},v?"Linked a Google Calendar":"Removed the Google Calendar link");toast(v?"Google Calendar linked.":"Link removed.");break}
+    case "calclear":saveCalendar({...S.calendar,embed:""},"Removed the Google Calendar link");break;
+    case "evdelask":S.confirm="e:"+id;render();break;
+    case "evdel":{const e=(S.calendar.events||[]).find(x=>x.id===id);S.confirm=null;saveCalendar({...S.calendar,events:(S.calendar.events||[]).filter(x=>x.id!==id)},`Removed event: ${e?e.title:id}`);break}
+    case "lock":S.parent=false;S.cal=false;render();break;
     case "school":toggleSchool(id,kid,false);break;
     case "slot":toggleSlot(id,Number(b.dataset.slot),kid);break;
     case "workout":toggleWorkout(kid,b.dataset.title);break;
@@ -679,6 +812,13 @@ document.addEventListener("change",e=>{
   saveChores(next,label);
 });
 document.addEventListener("submit",e=>{
+  if(e.target.id==="evform"){e.preventDefault();
+    const kids=[...document.querySelectorAll("#evkids [aria-pressed=true]")].map(b=>b.dataset.kid);
+    const title=$("#ev-title").value.trim(),date=$("#ev-date").value,time=$("#ev-time").value;
+    if(!title||!date){toast("Add what it is and the date.");return}
+    const ev={id:"e"+Date.now().toString(36),title,date,time,kids};
+    saveCalendar({...S.calendar,events:[...(S.calendar.events||[]),ev]},`Added event: ${title} (${fmtShort(date)}${time?" "+fmtClock(time):""})`);
+    toast("Event added.");return}
   if(e.target.id!=="aform")return;e.preventDefault();
   const kids=[...document.querySelectorAll("#akids [aria-pressed=true]")].map(b=>b.dataset.kid);
   if(!kids.length){toast("Pick at least one kid.");return}
@@ -718,6 +858,7 @@ function subscribe(){
   db.collection("weeks").onSnapshot(s=>{S.weeks={};s.docs.forEach(d=>S.weeks[d.id]=d.data());if(!s.metadata.fromCache){S.got.weeks=true;ok()}render()},()=>{S.got.weeks=true;render()});
   db.doc("config/chores").onSnapshot(s=>{S.chores=s.exists?[...(s.data().chores||[])]:[];if(!s.metadata.fromCache){S.got.chores=true;ok()}render()},()=>{S.got.chores=true;render()});
   db.collection("done").where("week","in",WINDOW).onSnapshot(s=>{const m={};s.docs.forEach(d=>m[d.id]=d.data());S.done=m;S.got.done=true;render()},()=>{});
+  db.doc("config/calendar").onSnapshot(s=>{S.calendar=s.exists?{embed:"",events:[],...s.data()}:{embed:"",events:[]};render()},()=>{});
   db.collection("log").orderBy("date","desc").limit(200).onSnapshot(s=>{S.logs=s.docs.map(d=>d.data());if(S.parent)render()},()=>{});
 }
 render();
